@@ -17,6 +17,31 @@ export class SnakePiece {
 
     }
   }
+
+  move(movX, movY) {
+    if (this.head) {
+      if (movX === 0) {
+        switch (movY) {
+          case 1:
+            console.log('moving on up');
+            break;
+          case -1:
+            console.log('moving on down');
+            break;
+        }
+      }
+      else {
+        switch (movX) {
+          case 1:
+            console.log('moving on right');
+            break;
+          case -1:
+            console.log('moving on left');
+            break;
+        }
+      }
+    }
+  }
 }
 
 export class Apple {
