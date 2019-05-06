@@ -47,6 +47,14 @@ const snakeCont = {
     (nextHeadT < 0) || (nextHeadB > this.canvas.height)) {
       gameOver();
     }
+
+    if ((nextHeadR > appleL && nextHeadL < appleR && nextHeadT == appleT && nextHeadB == appleB) ||
+    (nextHeadL < appleR && nextHeadR > appleL && nextHeadT == appleT && nextHeadB == appleB) ||
+    (nextHeadT < appleB && nextHeadB > appleT && nextHeadL == appleL && nextHeadR == appleR) ||
+    (nextHeadB > appleT && nextHeadT < appleB && nextHeadL == appleL && nextHeadR == appleR)) {
+      this.score + apple.score;
+      this.spawnApple();
+    }
   },
   clear : function() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
