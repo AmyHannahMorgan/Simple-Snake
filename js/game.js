@@ -1,7 +1,7 @@
-import {SnakePiece, Apple} from './modules/gameClasses.js';
+import {SnakePiece, Apple, PossiblePos} from './modules/gameClasses.js';
 
 const resolution = 10;
-const frameRate = 30;
+const frameRate = 15;
 const perAppleScore = 100
 const snakeCont = {
   gameStarted : false,
@@ -11,15 +11,25 @@ const snakeCont = {
   currApple : null,
   score : 0,
   setup : function() {
-    this.canvas.height = window.innerHeight / 2;
-    this.canvas.width = window.innerHeight / 2;
+    this.canvas.height = resolution * Math.round((window.innerHeight / 2) / resolution);
+    this.canvas.width = resolution * Math.round((window.innerHeight / 2) / resolution);
+    console.log(this.canvas.width, this.canvas.height);
+
+    this.possiblePositions = [];
+    console.log(this.canvas.height / resolution, this.canvas.width / resolution);
+    for(let y = 0; y < this.canvas.height / resolution; y++) {
+      for(let x = 0; x < this.canvas.width / resolution; x++) {
+        this.possiblePositions.push(new PossiblePos(x*resolution, y*resolution))
+      }
+    }
+    console.log(this.possiblePositions);
 
     this.ctx = this.canvas.getContext('2d');
 
     let dim = 1 * resolution,
     posX = this.canvas.width / 2 - (resolution / 2),
     posY = this.canvas.height / 2 - (resolution / 2);
-    this.snakeArray.push(new SnakePiece(dim, dim, posX, posY, 0, 0, true, null));
+    this.snakeArray.push(new SnakePiece(dim, dim, posX, posY, 0, 0, true, null, resolution));
     this.snakeHead = this.snakeArray[0];
 
     this.ctx.font = '30px Arial';
@@ -71,10 +81,32 @@ const snakeCont = {
       }}, 1000 / frameRate);
   },
   spawnApple : function() {
-    let x = RNG(0, Math.round(this.canvas.width - resolution)),
-    y = RNG(0, Math.round(this.canvas.height - resolution));
-    console.log(x, y);
-    this.currApple = new Apple(1 * resolution, 1 * resolution, x, y, perAppleScore);
+    let pos = this.possiblePositions[RNG(0, this.possiblePositions.length - 1)];
+    console.log(pos);
+    console.log(pos.x, pos.y);
+    this.currApple = new Apple(1 * resolution, 1 * resolution, pos.x, pos.y, perAppleScore);
+  },
+  addPiece : function() {
+    let y = this.snakeHead.pos.y,
+    x = this.snakeHead.pos.x;
+    switch (this.snakeHead.movX) {
+      case 1:
+        x = this.snakeHead.pos.x - resolution;
+        break;
+      case -1:
+        x = this.snakeHead.pos.x + resolution;
+        break;
+    }
+    switch (this.snakeHead.movY) {
+      case 1:
+        y = this.snakeHead.pos.y - resolution;
+        break;
+      case -1:
+        y = this.snakeHead.pos.y + resolution
+        break;
+    }
+    let dim = 1 * resolution;
+    let newPiece = new SnakePiece(dim, dim, x, y, 0, 0, false, this.);
   }
 }
 
