@@ -1,7 +1,8 @@
 export class SnakePiece {
-  constructor(width, height, posX, posY, movX, movY, head, neighbor) {
+  constructor(width, height, posX, posY, movX, movY, head, neighbor, resolution) {
     this.width = width;
     this.height = height;
+    this.resolution = resolution;
     this.pos = {
       x : posX,
       y : posY
@@ -14,7 +15,9 @@ export class SnakePiece {
 
   getNeighborMov() {
     if(!this.head) {
-
+      let nPos = this.neighbor.pos;
+      this.movX = nPos.x - this.pos.x;
+      this.movY = nPos.y - this.pos.y;
     }
   }
 
@@ -46,8 +49,8 @@ export class SnakePiece {
   }
 
   update(ctx, color) {
-    this.pos.x += this.movX
-    this.pos.y += this.movY;
+    this.pos.x += this.movX * this.resolution;
+    this.pos.y += this.movY * this.resolution;
     ctx.fillStyle = color;
     ctx.fillRect(this.pos.x, this.pos.y, this.width, this.height);
   }
@@ -67,5 +70,12 @@ export class Apple {
   update(ctx, color) {
     ctx.fillStyle = color;
     ctx.fillRect(this.pos.x, this.pos.y, this.width, this.height);
+  }
+}
+
+export class PossiblePos {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
   }
 }
