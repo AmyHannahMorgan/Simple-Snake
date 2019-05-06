@@ -1,3 +1,4 @@
+import {hello} from './modules/gameClasses.js';
 const canvas = document.getElementById('snake');
 
 document.onload = setup();
