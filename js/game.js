@@ -10,6 +10,7 @@ const snakeCont = {
   snakeArray : [],
   currApple : null,
   score : 0,
+  scoreElem : document.getElementById('score'),
   setup : function() {
     this.canvas.height = resolution * Math.round((window.innerHeight / 2) / resolution);
     this.canvas.width = resolution * Math.round((window.innerHeight / 2) / resolution);
@@ -66,7 +67,7 @@ const snakeCont = {
     (nextHeadL < appleR && nextHeadR > appleL && nextHeadT == appleT && nextHeadB == appleB) ||
     (nextHeadT < appleB && nextHeadB > appleT && nextHeadL == appleL && nextHeadR == appleR) ||
     (nextHeadB > appleT && nextHeadT < appleB && nextHeadL == appleL && nextHeadR == appleR)) {
-      this.score + apple.score;
+      this.score += apple.score;
       this.spawnApple();
       this.addPiece();
     }
@@ -94,6 +95,7 @@ const snakeCont = {
       this.snakeArray[i].update(this.ctx, 'black');
     }
     this.currApple.update(this.ctx, 'red');
+    this.scoreElem.innerHTML = `Score: ${this.score}`;
     setTimeout(() => {this.logic();
       if (!this.gameOver) {
         this.clear();
