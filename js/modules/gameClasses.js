@@ -15,9 +15,8 @@ export class SnakePiece {
 
   getNeighborMov() {
     if(!this.head) {
-      let nPos = this.neighbor.pos;
-      this.movX = nPos.x - this.pos.x;
-      this.movY = nPos.y - this.pos.y;
+      this.pos.x = this.neighbor.pos.x;
+      this.pos.y = this.neighbor.pos.y;
     }
   }
 
@@ -49,10 +48,16 @@ export class SnakePiece {
   }
 
   update(ctx, color) {
-    this.pos.x += this.movX * this.resolution;
-    this.pos.y += this.movY * this.resolution;
-    ctx.fillStyle = color;
-    ctx.fillRect(this.pos.x, this.pos.y, this.width, this.height);
+    if (this.head) {
+      this.pos.x += this.movX * this.resolution;
+      this.pos.y += this.movY * this.resolution;
+      ctx.fillStyle = color;
+      ctx.fillRect(this.pos.x, this.pos.y, this.width, this.height);
+    }
+    else {
+      ctx.fillStyle = color;
+      ctx.fillRect(this.pos.x, this.pos.y, this.width, this.height);
+    }
   }
 }
 

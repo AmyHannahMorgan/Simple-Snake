@@ -41,6 +41,10 @@ const snakeCont = {
     });
   },
   logic : function() {
+    for(let i = this.snakeArray.length - 1; i > 0; i--) {
+      this.snakeArray[i].getNeighborMov();
+    }
+
     let head = this.snakeHead;
     let apple = this.currApple;
 
@@ -64,6 +68,7 @@ const snakeCont = {
     (nextHeadB > appleT && nextHeadT < appleB && nextHeadL == appleL && nextHeadR == appleR)) {
       this.score + apple.score;
       this.spawnApple();
+      this.addPiece();
     }
   },
   clear : function() {
@@ -87,26 +92,30 @@ const snakeCont = {
     this.currApple = new Apple(1 * resolution, 1 * resolution, pos.x, pos.y, perAppleScore);
   },
   addPiece : function() {
-    let y = this.snakeHead.pos.y,
-    x = this.snakeHead.pos.x;
-    switch (this.snakeHead.movX) {
+    let lastPiece = this.snakeArray[this.snakeArray.length - 1];
+    console.log(lastPiece);
+    let y = lastPiece.pos.y,
+    x = lastPiece.pos.x;
+    switch (lastPiece.movX) {
       case 1:
-        x = this.snakeHead.pos.x - resolution;
+        x = lastPiece.pos.x - resolution;
         break;
       case -1:
-        x = this.snakeHead.pos.x + resolution;
+        x = lastPiece.pos.x + resolution;
         break;
     }
-    switch (this.snakeHead.movY) {
+    switch (lastPiece.movY) {
       case 1:
-        y = this.snakeHead.pos.y - resolution;
+        y = lastPiece.pos.y - resolution;
         break;
       case -1:
-        y = this.snakeHead.pos.y + resolution
+        y = lastPiece.pos.y + resolution
         break;
     }
     let dim = 1 * resolution;
-    let newPiece = new SnakePiece(dim, dim, x, y, 0, 0, false, this.);
+    let newPiece = new SnakePiece(dim, dim, x, y, 0, 0, false, lastPiece, resolution);
+    this.snakeArray.push(newPiece);
+    console.log(this.snakeArray);
   }
 }
 
