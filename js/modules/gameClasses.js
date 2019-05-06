@@ -24,10 +24,14 @@ export class SnakePiece {
     if (this.head) {
       switch (movY) {
         case 1:
-          this.movY = 1;
+          if (this.movY != -1) {
+            this.movY = 1;
+          }
           break;
         case -1:
-          this.movY = -1
+          if (this.movY != 1) {
+            this.movY = -1
+          }
           break;
         case 0:
           this.movY = 0
@@ -35,10 +39,14 @@ export class SnakePiece {
       }
       switch (movX) {
         case 1:
-          this.movX = 1
+          if (this.movX != -1) {
+            this.movX = 1
+          }
           break;
         case -1:
-          this.movX = -1;
+          if (this.movX != 1) {
+            this.movX = -1;
+          }
           break;
         case 0:
           this.movX = 0
