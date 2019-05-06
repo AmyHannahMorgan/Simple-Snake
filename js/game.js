@@ -48,9 +48,9 @@ const snakeCont = {
     let head = this.snakeHead;
     let apple = this.currApple;
 
-    let nextHeadL = head.pos.x + head.movX,
+    let nextHeadL = head.pos.x + (head.movX*resolution),
     nextHeadR = nextHeadL + resolution,
-    nextHeadT = head.pos.y + head.movY,
+    nextHeadT = head.pos.y + (head.movY*resolution),
     nextHeadB = nextHeadT + resolution;
 
     let appleL = apple.pos.x,
@@ -69,6 +69,21 @@ const snakeCont = {
       this.score + apple.score;
       this.spawnApple();
       this.addPiece();
+    }
+
+    for(let i = 1; i < this.snakeArray.length; i++) {
+      let segment = this.snakeArray[i];
+      let segmentL = segment.pos.x,
+      segmentR = segmentL + resolution,
+      segmentT = segment.pos.y,
+      segmentB = segmentT + resolution;
+
+      if ((nextHeadR > segmentL && nextHeadL < segmentR && nextHeadT == segmentT && nextHeadB == segmentB) ||
+      (nextHeadL < segmentR && nextHeadR > segmentL && nextHeadT == segmentT && nextHeadB == segmentB) ||
+      (nextHeadT < segmentB && nextHeadB > segmentT && nextHeadL == segmentL && nextHeadR == segmentR) ||
+      (nextHeadB > segmentT && nextHeadT < segmentB && nextHeadL == segmentL && nextHeadR == segmentR)) {
+        gameOver();
+      }
     }
   },
   clear : function() {
