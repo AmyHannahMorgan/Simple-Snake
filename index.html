@@ -3,11 +3,26 @@
   <head>
     <meta charset="utf-8">
     <title>Simple-Snake</title>
+    <link href="https://fonts.googleapis.com/css?family=Oswald|Press+Start+2P" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
   </head>
   <body>
-    <canvas id="snake" style="border: solid thick grey"></canvas>
-    <h1 id="score"></h1>
+    <header>
+      <h1>Simple-Snake</h1>
+    </header>
+    <div class="bodyCont">
+      <p>WASD or arrow keys to move</p>
+      <canvas id="snake" style="border: solid thick grey"></canvas>
+      <h1 id="score">Score: 0</h1>
+    </div>
     <script type="module" src="js/modules/gameClasses.js" charset="utf-8"></script>
-    <script type="module" src="js/game.js" charset="utf-8"></script>
+    <script type="module" src="js/game.js" charset="utf-8">Score: 0</script>
+    <footer>
+      <p>Created by Amy Hannah Morgan</p>
+      <p>Find me on:</p>
+      <div class="socialMedia">
+
+      </div>
+    </footer>
   </body>
 </html>

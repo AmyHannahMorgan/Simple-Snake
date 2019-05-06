@@ -1,0 +1,61 @@
+body {
+  margin: 0;
+  background-color: #353839;
+}
+header {
+  width: 100vw;
+  padding: 1vh 0 1vh;
+  background-color: grey;
+
+  display: flex;
+  justify-content: center;
+}
+
+header > h1 {
+  font-family: 'Press Start 2P', cursive;
+  color: lightgreen;
+}
+
+footer {
+  width: 100vw;
+  padding: 1vh 0 1vh;
+  background-color: grey;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+footer > p {
+  margin: 0;
+
+  font-family: 'Oswald', sans-serif;
+  font-size: 1.25em;
+  color: lightgreen;
+}
+
+.bodyCont {
+  width: 100vw;
+  padding: 1vh 0;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.bodyCont > canvas {
+  width: 50vh;
+  height: 50vh;
+  background-color: white;
+}
+
+.bodyCont > p {
+  font-family: 'Press Start 2P', cursive;
+  color: lightgreen;
+}
+
+#score {
+  font-family: 'Press Start 2P', cursive;
+  color: lightgreen;
+}
