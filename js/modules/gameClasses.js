@@ -20,27 +20,36 @@ export class SnakePiece {
 
   move(movX, movY) {
     if (this.head) {
-      if (movX === 0) {
-        switch (movY) {
-          case 1:
-            console.log('moving on up');
-            break;
-          case -1:
-            console.log('moving on down');
-            break;
-        }
+      switch (movY) {
+        case 1:
+          this.movY = 1;
+          break;
+        case -1:
+          this.movY = -1
+          break;
+        case 0:
+          this.movY = 0
+          break;
       }
-      else {
-        switch (movX) {
-          case 1:
-            console.log('moving on right');
-            break;
-          case -1:
-            console.log('moving on left');
-            break;
-        }
+      switch (movX) {
+        case 1:
+          this.movX = 1
+          break;
+        case -1:
+          this.movX = -1;
+          break;
+        case 0:
+          this.movX = 0
+          break;
       }
     }
+  }
+
+  update(ctx, color) {
+    this.pos.x += this.movX
+    this.pos.y += this.movY;
+    ctx.fillStyle = color;
+    ctx.fillRect(this.pos.x, this.pos.y, this.width, this.height);
   }
 }
 
@@ -53,5 +62,10 @@ export class Apple {
       y : posY
     };
     this.score = score;
+  }
+
+  update(ctx, color) {
+    ctx.fillStyle = color;
+    ctx.fillRect(this.pos.x, this.pos.y, this.width, this.height);
   }
 }
