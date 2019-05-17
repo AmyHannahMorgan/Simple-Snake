@@ -1,9 +1,13 @@
 import {SnakePiece, Apple, PossiblePos} from './modules/gameClasses.js';
 
+const snakeHeadSrc = 'assets/game assets/snake/Snake head.png';
+const snakeTailSrc = 'assets/game assets/snake/Snake tail.png';
 const resolution = 10;
 const frameRate = 15;
 const perAppleScore = 100
 const snakeCont = {
+  snakeHeadImg: new Image(),
+  snakeTailImg: new Image(),
   gameStarted : false,
   gameOver : false,
   canvas : document.getElementById('snake'),
@@ -24,6 +28,9 @@ const snakeCont = {
       }
     }
     console.log(this.possiblePositions);
+
+    this.snakeHeadImg.src = snakeHeadSrc;
+    this.snakeTailImg.src = snakeTailSrc;
 
     this.ctx = this.canvas.getContext('2d');
 
@@ -92,7 +99,15 @@ const snakeCont = {
   },
   update : function() {
     for(let i = 0; i < this.snakeArray.length; i++) {
-      this.snakeArray[i].update(this.ctx, 'black');
+      if (i === 0) {
+        this.snakeArray[i].update(this.ctx, this.snakeHeadImg);
+      }
+      else if (i === (this.snakeArray.length - 1)) {
+        this.snakeArray[i].update(this.ctx, this.snakeTailImg, true)
+      }
+      else {
+        this.snakeArray[i].update(this.ctx, '#0f9200');
+      }
     }
     this.currApple.update(this.ctx, 'red');
     this.scoreElem.innerHTML = `Score: ${this.score}`;
@@ -146,11 +161,25 @@ function gameStart() {
     snakeCont.update();
     snakeCont.gameStarted = true;
   }
+  else if (snakeCont.gameOver) {
+    snakeCont.gameOver = false;
+    snakeCont.snakeArray = [];
+    snakeCont.score = 0;
+    snakeCont.currApple = null;
+    snakeCont.setup();
+    snakeCont.gameStarted = false;
+  }
 }
 
 function gameOver() {
   snakeCont.gameOver = true;
   console.log('GAME OVER');
+  snakeCont.clear();
+  snakeCont.ctx.font = '30px Arial';
+  snakeCont.ctx.fillStyle = 'black';
+  snakeCont.ctx.textAlign = 'center';
+  snakeCont.ctx.fillText('GAME\nOVER', snakeCont.canvas.width / 2, snakeCont.canvas.height / 2);
+  snakeCont.ctx.fillText('Press space to restart', snakeCont.canvas.width / 2, (snakeCont.canvas.height / 2) + 30);
 }
 
 function keyLogic(e) {

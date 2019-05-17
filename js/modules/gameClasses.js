@@ -55,16 +55,57 @@ export class SnakePiece {
     }
   }
 
-  update(ctx, color) {
+  update(ctx, color, tail) {
     if (this.head) {
       this.pos.x += this.movX * this.resolution;
       this.pos.y += this.movY * this.resolution;
-      ctx.fillStyle = color;
-      ctx.fillRect(this.pos.x, this.pos.y, this.width, this.height);
+      // ctx.fillStyle = color;
+      // ctx.fillRect(this.pos.x, this.pos.y, this.width, this.height);
+      let rads = this.getRads([this.movX, this.movY]);
+      let x = this.pos.x + (this.resolution / 2);
+      let y = this.pos.y + (this.resolution / 2);
+
+      ctx.translate(x, y);
+      ctx.rotate(rads);
+      ctx.drawImage(color, 0 - (this.resolution / 2), 0 -(this.resolution / 2), this.width, this.height);
+      ctx.rotate(-rads);
+      ctx.translate(-x, -y);
+    }
+    else if (tail) {
+      let x = this.pos.x + (this.resolution / 2);
+      let y = this.pos.y + (this.resolution / 2);
+      let relX = (this.neighbor.pos.x - this.pos.x) / this.resolution;
+      let relY = (this.neighbor.pos.y - this.pos.y) / this.resolution;
+      let rads = this.getRads([relX, relY]);
+      console.log({relX, relY});
+      console.log(rads);
+
+      ctx.translate(x, y);
+      ctx.rotate(rads);
+      ctx.drawImage(color, 0 - (this.resolution / 2), 0 -(this.resolution / 2), this.width, this.height);
+      ctx.rotate(-rads);
+      ctx.translate(-x, -y);
     }
     else {
       ctx.fillStyle = color;
       ctx.fillRect(this.pos.x, this.pos.y, this.width, this.height);
+    }
+  }
+
+  getRads(mov) {
+    switch (mov.join(' ')) {
+      case '0 -1':
+        return 0;
+        break;
+      case '1 0':
+        return 90 * Math.PI / 180;
+        break;
+      case '0 1':
+        return 180 * Math.PI / 180;
+        break;
+      case '-1 0':
+        return 270 * Math.PI / 180;
+        break;
     }
   }
 }
