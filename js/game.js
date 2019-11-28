@@ -141,7 +141,7 @@ document.onload = snakeCont.setup();
 function gameStart() {
   if (!snakeCont.gameStarted) {
     snakeCont.clear();
-    snakeCont.snakeHead.movX = 1;
+    snakeCont.snakeHead.move(1, 0);
     snakeCont.spawnApple();
     snakeCont.update();
     snakeCont.gameStarted = true;
